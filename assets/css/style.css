@@ -183,15 +183,42 @@ button {
 }
 
 .site-logo {
+  flex-shrink: 0;
   font-size: var(--fs-tagline);
   font-weight: var(--fw-semibold);
   letter-spacing: var(--ls-tagline);
   color: var(--color-ink);
+  white-space: nowrap;
 }
 
-.site-header .btn {
-  padding: 8px 18px;
-  font-size: var(--fs-button-utility);
+/* 섹션 바로가기 — 이모지 아이콘. 전화 버튼은 하단 고정 바 하나로
+   통일했으므로 헤더에는 넣지 않는다(중복 CTA 정리). */
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.site-nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  font-size: 18px;
+  line-height: 1;
+  transition: transform var(--duration-standard) var(--ease-standard),
+    background-color var(--duration-standard) var(--ease-standard);
+}
+
+.site-nav-link:hover,
+.site-nav-link:focus-visible {
+  background-color: var(--color-canvas-soft);
+}
+
+.site-nav-link:active {
+  transform: scale(0.9);
 }
 
 /* ==========================================================================
@@ -319,21 +346,6 @@ button {
   font-weight: var(--fw-regular);
   line-height: var(--lh-body);
   color: var(--color-body-muted-on-dark);
-}
-
-.hero-cta {
-  margin-top: var(--space-32);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-16);
-  flex-wrap: wrap;
-}
-
-.hero-cta .btn {
-  padding: 14px 28px;
-  font-size: var(--fs-button-large);
-  font-weight: var(--fw-medium);
 }
 
 /* ==========================================================================
@@ -1131,6 +1143,12 @@ button {
   font-size: 18px;
 }
 
+/* 전화 상담이 하단 바 하나로 유일한 통화 CTA가 됐으므로,
+   전화기 아이콘을 문의하기보다 한 단계 크게 키워 눈에 먼저 띄게 한다 */
+.sticky-bar-call .sticky-bar-icon {
+  font-size: 26px;
+}
+
 /* ==========================================================================
    반응형 — 1440 / 1068 / 833 / 640 / 480
    ========================================================================== */
@@ -1169,21 +1187,38 @@ button {
 }
 
 @media (max-width: 640px) {
+  .site-header .container {
+    padding: 0 var(--space-16);
+  }
+
+  .site-logo {
+    font-size: 14px;
+  }
+
+  .site-nav {
+    gap: 0;
+    max-width: 45vw;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .site-nav-link {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+  }
+
   .hero-inner {
     padding: calc(var(--header-height) + var(--space-24)) var(--space-24) var(--space-48);
   }
 
   .hero-title {
     font-size: var(--fs-display-md); /* 34px */
-  }
-
-  .hero-cta {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .hero-cta .btn {
-    width: 100%;
   }
 
   .symptoms {
@@ -1248,12 +1283,38 @@ button {
     font-size: 28px;
   }
 
+  /* 모바일에서는 세로 무한 스크롤 대신 가로로 넘기는 방식으로 바꾼다.
+     3개 열이 각각 한 "페이지"가 되어 좌우로 스와이프되고, 애니메이션과
+     무한 루프용 복제 카드는 꺼서 길이가 불필요하게 늘어나거나
+     빈 공간이 생기지 않게 한다. */
   .reviews-marquee {
-    flex-direction: column;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    padding-bottom: 0;
+  }
+
+  .reviews-marquee::-webkit-scrollbar {
+    display: none;
   }
 
   .reviews-column {
-    height: 380px;
+    flex: 0 0 82%;
+    height: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+    scroll-snap-align: start;
+  }
+
+  .reviews-track.is-animated {
+    animation: none;
+  }
+
+  .reviews-track [aria-hidden="true"] {
+    display: none;
   }
 
   .contact {

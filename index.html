@@ -22,8 +22,15 @@
 <body>
   <header class="site-header">
     <div class="container">
-      <span class="site-logo">클린팩토리</span>
-      <a href="tel:010-2198-5949" class="btn btn-primary">전화 문의</a>
+      <span class="site-logo">에어컨청소 클린팩토리</span>
+      <nav class="site-nav" aria-label="섹션 바로가기">
+        <a href="#symptoms" class="site-nav-link" title="이런 증상이라면" aria-label="이런 증상이라면">🔍</a>
+        <a href="#process" class="site-nav-link" title="시공 과정" aria-label="시공 과정">🛠️</a>
+        <a href="#gallery" class="site-nav-link" title="시공 갤러리" aria-label="시공 갤러리">🖼️</a>
+        <a href="#pricing" class="site-nav-link" title="가격 안내" aria-label="가격 안내">💰</a>
+        <a href="#reviews" class="site-nav-link" title="고객 후기" aria-label="고객 후기">⭐</a>
+        <a href="#contact" class="site-nav-link" title="문의하기" aria-label="문의하기">✉️</a>
+      </nav>
     </div>
   </header>
 
@@ -49,9 +56,6 @@
           에어컨 설치 기술자가 직접 완전분해 세척합니다.<br />
           필터만 씻어서는 닿지 않는 열교환기·송풍팬 속 곰팡이까지 닦아냅니다.
         </p>
-        <div class="hero-cta">
-          <a href="tel:010-2198-5949" class="btn btn-primary">전화 문의 010-2198-5949</a>
-        </div>
       </div>
     </section>
 
@@ -609,15 +613,9 @@
           <input type="hidden" name="subject" value="클린팩토리 홈페이지 문의" />
           <input type="checkbox" name="botcheck" class="contact-honeypot" tabindex="-1" autocomplete="off" />
 
-          <div class="contact-row">
-            <div class="contact-field">
-              <label for="contactName">성함 <span class="contact-required">*</span></label>
-              <input type="text" id="contactName" name="성함" required autocomplete="name" />
-            </div>
-            <div class="contact-field">
-              <label for="contactPhone">연락처 <span class="contact-required">*</span></label>
-              <input type="tel" id="contactPhone" name="연락처" required autocomplete="tel" placeholder="010-0000-0000" />
-            </div>
+          <div class="contact-field">
+            <label for="contactPhone">연락처 <span class="contact-required">*</span></label>
+            <input type="tel" id="contactPhone" name="연락처" required autocomplete="tel" placeholder="010-0000-0000" />
           </div>
 
           <div class="contact-row">
