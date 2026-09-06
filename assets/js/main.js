@@ -200,12 +200,14 @@ function setupContactForm() {
     const formData = new FormData(form);
 
     // FormSubmit은 메일 발송 자체는 빠른데, 브라우저로 응답이 오는 데는
-    // 가끔 오래 걸린다. 응답을 무작정 기다리게 하지 않고, 일정 시간이
-    // 지나면 (네트워크 자체가 끊긴 게 아닌 이상) 성공으로 간주한다.
-    // 진짜 실패(오프라인 등)는 보통 몇 초 안에 바로 reject되므로 걸러진다.
+    // 가끔 오래 걸린다. 그렇다고 응답을 무한정 기다리게 두지는 않되,
+    // 일정 시간이 지나도록 응답이 없으면 "성공"이라고 단정하지 않고
+    // 정직하게 "확인 중"이라고만 안내한다 — 실제로 FormSubmit 서버
+    // 자체가 잠깐 먹통이었던 적이 있어, 응답 지연을 성공으로
+    // 잘못 판단하면 문의가 그냥 사라져도 알 방법이 없다.
     const timedOut = Symbol("timed-out");
     const timeout = new Promise((resolve) => {
-      setTimeout(() => resolve(timedOut), 3000);
+      setTimeout(() => resolve(timedOut), 6000);
     });
 
     try {
@@ -218,7 +220,12 @@ function setupContactForm() {
         timeout,
       ]);
 
-      if (result === timedOut || result.ok) {
+      if (result === timedOut) {
+        setStatus(
+          "접수 요청은 보냈지만 확인이 늦어지고 있어요. 곧 연락드리겠지만, 급하시면 전화로 문의해 주세요: 010-2198-5949",
+          "is-error"
+        );
+      } else if (result.ok) {
         form.reset();
         setStatus(
           "문의가 접수되었습니다. 확인하는 대로 연락드릴게요.",
