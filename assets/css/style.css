@@ -1244,6 +1244,7 @@ button {
 .footer-info-label {
   display: inline-block;
   min-width: 96px;
+  margin-right: var(--space-12);
   color: var(--color-body-muted-on-dark);
 }
 
