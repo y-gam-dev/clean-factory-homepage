@@ -222,7 +222,7 @@ function setupContactForm() {
 
       if (result === timedOut) {
         setStatus(
-          "접수 요청은 보냈지만 확인이 늦어지고 있어요. 곧 연락드리겠지만, 급하시면 전화로 문의해 주세요: 010-2198-5949",
+          "접수가 늦어지고 있어요. 곧 연락드리겠지만, 급하시면 전화로 문의해 주세요: 010-2198-5949",
           "is-error"
         );
       } else if (result.ok) {
