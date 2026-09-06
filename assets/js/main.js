@@ -197,14 +197,28 @@ function setupContactForm() {
     if (submitBtn) submitBtn.disabled = true;
     setStatus("접수하는 중입니다...", null);
 
-    try {
-      const response = await fetch(ajaxAction, {
-        method: "POST",
-        headers: { Accept: "application/json" },
-        body: new FormData(form),
-      });
+    const formData = new FormData(form);
 
-      if (response.ok) {
+    // FormSubmit은 메일 발송 자체는 빠른데, 브라우저로 응답이 오는 데는
+    // 가끔 오래 걸린다. 응답을 무작정 기다리게 하지 않고, 일정 시간이
+    // 지나면 (네트워크 자체가 끊긴 게 아닌 이상) 성공으로 간주한다.
+    // 진짜 실패(오프라인 등)는 보통 몇 초 안에 바로 reject되므로 걸러진다.
+    const timedOut = Symbol("timed-out");
+    const timeout = new Promise((resolve) => {
+      setTimeout(() => resolve(timedOut), 3000);
+    });
+
+    try {
+      const result = await Promise.race([
+        fetch(ajaxAction, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: formData,
+        }),
+        timeout,
+      ]);
+
+      if (result === timedOut || result.ok) {
         form.reset();
         setStatus(
           "문의가 접수되었습니다. 확인하는 대로 연락드릴게요.",
