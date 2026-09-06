@@ -9,8 +9,55 @@
     content="남양주·구리·하남·의정부 출장 에어컨 청소. 에어컨 설치 기술자가 직접 열교환기·송풍팬까지 완전분해 후 세척합니다. 벽걸이·스탠드·시스템·2in1 전 기종 대응."
   />
 
-  <!-- TODO: 정식 도메인이 정해지면 canonical, Open Graph, Twitter 카드 태그 추가 -->
-  <!-- TODO: 상호·주소·영업시간이 확정되면 LocalBusiness JSON-LD 추가 (전화번호는 확정: 010-2198-5949) -->
+  <!-- TODO: 정식 도메인이 정해지면 아래 canonical·OG·Twitter의 Vercel 임시 주소를 전부 교체 -->
+  <link rel="canonical" href="https://clean-factory-homepage.vercel.app/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ko_KR" />
+  <meta property="og:site_name" content="클린팩토리" />
+  <meta property="og:title" content="클린팩토리 | 남양주 에어컨 완전분해 청소" />
+  <meta
+    property="og:description"
+    content="남양주·구리·하남·의정부 출장 에어컨 청소. 에어컨 설치 기술자가 직접 열교환기·송풍팬까지 완전분해 후 세척합니다."
+  />
+  <meta property="og:url" content="https://clean-factory-homepage.vercel.app/" />
+  <meta property="og:image" content="https://clean-factory-homepage.vercel.app/assets/images/gallery/01-dasan-1way/after.jpg" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="클린팩토리 | 남양주 에어컨 완전분해 청소" />
+  <meta
+    name="twitter:description"
+    content="남양주·구리·하남·의정부 출장 에어컨 청소. 에어컨 설치 기술자가 직접 열교환기·송풍팬까지 완전분해 후 세척합니다."
+  />
+  <meta name="twitter:image" content="https://clean-factory-homepage.vercel.app/assets/images/gallery/01-dasan-1way/after.jpg" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "남양주에어컨청소 클린팩토리",
+    "image": "https://clean-factory-homepage.vercel.app/assets/images/logo.png",
+    "url": "https://clean-factory-homepage.vercel.app/",
+    "telephone": "+82-10-2198-5949",
+    "priceRange": "₩",
+    "areaServed": [
+      { "@type": "City", "name": "남양주시" },
+      { "@type": "City", "name": "구리시" },
+      { "@type": "City", "name": "하남시" },
+      { "@type": "City", "name": "의정부시" },
+      { "@type": "AdministrativeArea", "name": "서울 동북부(노원·중랑·도봉·강북 등)" }
+    ],
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday", "Tuesday", "Wednesday", "Thursday",
+        "Friday", "Saturday", "Sunday"
+      ],
+      "opens": "09:00",
+      "closes": "19:00"
+    }
+  }
+  </script>
 
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
