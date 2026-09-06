@@ -1194,25 +1194,76 @@ button {
    최하단 fine-print 법적 고지 행)을 그대로 따른다.
    ========================================================================== */
 .site-footer {
-  background-color: var(--color-canvas-soft);
+  /* 바로 위 문의 섹션도 어두운 타일이라, 완전히 같은 색 대신
+     미세하게 더 어두운 다크 타일 변형(surface-dark-3)을 써서
+     구분이 생기게 한다. */
+  background-color: var(--color-surface-dark-3);
+}
+
+.footer-inner {
+  padding: var(--space-80) var(--space-24);
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  font-size: var(--fs-body-strong);
+  font-weight: var(--fw-semibold);
+  color: var(--color-body-on-dark);
+}
+
+.footer-info-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-32) var(--space-48);
+  margin-top: var(--space-48);
+}
+
+.footer-info-group {
+  flex: 1 1 200px;
+}
+
+.footer-info-title {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  color: var(--color-primary-on-dark);
+  margin-bottom: var(--space-12);
+}
+
+.footer-info-row {
+  font-size: var(--fs-body);
+  color: var(--color-body-on-dark);
+  margin-bottom: var(--space-8);
+}
+
+.footer-info-row a {
+  color: var(--color-body-on-dark);
+}
+
+.footer-info-label {
+  display: inline-block;
+  min-width: 96px;
+  color: var(--color-body-muted-on-dark);
 }
 
 .footer-legal {
-  padding: var(--space-24);
+  margin-top: var(--space-48);
+  padding-top: var(--space-24);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-8) var(--space-16);
   align-items: center;
 }
 
-.footer-legal-line,
+.footer-legal-link,
 .footer-copyright {
   font-size: var(--fs-fine-print);
-  color: var(--color-ink-muted-48);
+  color: var(--color-body-muted-on-dark);
 }
 
 .footer-legal-link {
-  color: var(--color-ink-muted-48);
   text-decoration: underline;
 }
 
@@ -1221,6 +1272,15 @@ button {
 }
 
 @media (max-width: 640px) {
+  .footer-inner {
+    padding: var(--space-48) var(--space-24);
+  }
+
+  .footer-info-grid {
+    margin-top: var(--space-32);
+    gap: var(--space-24);
+  }
+
   .footer-legal {
     flex-direction: column;
     align-items: flex-start;
