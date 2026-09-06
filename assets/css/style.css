@@ -1141,6 +1141,32 @@ button {
   white-space: nowrap;
 }
 
+.contact-consent {
+  margin: var(--space-24) 0 var(--space-16);
+}
+
+.contact-consent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-8);
+  font-size: var(--fs-caption);
+  color: var(--color-body-muted-on-dark);
+  cursor: pointer;
+}
+
+.contact-consent-label input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  accent-color: var(--color-primary);
+}
+
+.contact-consent-label a {
+  color: var(--color-primary-on-dark);
+  text-decoration: underline;
+}
+
 .contact-submit {
   width: 100%;
   margin-top: var(--space-8);
@@ -1161,6 +1187,114 @@ button {
 .contact-status.is-error {
   color: var(--color-error);
   font-weight: var(--fw-semibold);
+}
+
+/* ==========================================================================
+   푸터 — DESIGN-apple.md의 footer 토큰(연회색 배경, 조밀한 링크 컬럼,
+   최하단 fine-print 법적 고지 행)을 그대로 따른다.
+   ========================================================================== */
+.site-footer {
+  background-color: var(--color-canvas-soft);
+}
+
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-48);
+  padding: var(--space-80) var(--space-24) var(--space-48);
+}
+
+.footer-brand {
+  flex: 1 1 240px;
+  max-width: 320px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  font-size: var(--fs-body-strong);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+}
+
+.footer-tagline {
+  margin-top: var(--space-12);
+  font-size: var(--fs-caption);
+  color: var(--color-ink-muted-48);
+  line-height: 1.6;
+}
+
+.footer-col {
+  flex: 1 1 140px;
+}
+
+.footer-col-title {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+  margin-bottom: var(--space-16);
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.footer-links a,
+.footer-links li {
+  font-size: var(--fs-caption);
+  color: var(--color-ink-muted-80);
+}
+
+.footer-links a {
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--color-primary);
+}
+
+.footer-legal {
+  border-top: 1px solid var(--color-hairline);
+  padding: var(--space-24);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8) var(--space-16);
+  align-items: center;
+}
+
+.footer-legal-line,
+.footer-copyright {
+  font-size: var(--fs-fine-print);
+  color: var(--color-ink-muted-48);
+}
+
+.footer-legal-link {
+  color: var(--color-ink-muted-48);
+  text-decoration: underline;
+}
+
+.footer-copyright {
+  margin-left: auto;
+}
+
+@media (max-width: 640px) {
+  .footer-grid {
+    padding: var(--space-48) var(--space-24) var(--space-32);
+    gap: var(--space-32);
+  }
+
+  .footer-legal {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-copyright {
+    margin-left: 0;
+  }
 }
 
 /* ==========================================================================
