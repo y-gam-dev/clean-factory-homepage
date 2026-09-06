@@ -162,10 +162,12 @@ function setupReviewsMoreToggle() {
 }
 
 /**
- * 문의 폼. FormSubmit(formsubmit.co)의 AJAX 엔드포인트로 제출해
- * 페이지 이동 없이 접수 결과를 바로 보여준다. 백엔드·DB·계정 가입
- * 없이 이메일로만 접수된다 — 처음 한 번만 그 이메일로 확인 메일이
- * 오고, 링크를 클릭해야 그 다음부터 실제로 도착한다.
+ * 문의 폼. Web3Forms(api.web3forms.com)의 AJAX 엔드포인트로 제출해
+ * 페이지 이동 없이 접수 결과를 바로 보여준다. 백엔드·DB 없이
+ * access_key 하나로 이메일 접수만 이뤄진다.
+ * 응답 JSON에 success 필드가 오므로 그 값으로 성공/실패를 정확히
+ * 판단한다 — 이전에 쓰던 FormSubmit은 이 필드가 없어 상태 코드로만
+ * 추측해야 했고, 그마저 응답이 없을 때는 성공 여부를 알 수 없었다.
  * _honey 필드가 채워져 있으면 스팸으로 보고 조용히 무시한다.
  */
 function setupContactForm() {
@@ -174,7 +176,7 @@ function setupContactForm() {
 
   const status = form.querySelector("[data-contact-status]");
   const submitBtn = form.querySelector(".contact-submit");
-  const ajaxAction = form.getAttribute("data-ajax-action");
+  const ajaxAction = form.getAttribute("action");
 
   function setStatus(message, kind) {
     if (!status) return;
@@ -199,12 +201,11 @@ function setupContactForm() {
 
     const formData = new FormData(form);
 
-    // FormSubmit은 메일 발송 자체는 빠른데, 브라우저로 응답이 오는 데는
-    // 가끔 오래 걸린다. 그렇다고 응답을 무한정 기다리게 두지는 않되,
-    // 일정 시간이 지나도록 응답이 없으면 "성공"이라고 단정하지 않고
-    // 정직하게 "확인 중"이라고만 안내한다 — 실제로 FormSubmit 서버
-    // 자체가 잠깐 먹통이었던 적이 있어, 응답 지연을 성공으로
-    // 잘못 판단하면 문의가 그냥 사라져도 알 방법이 없다.
+    // Web3Forms는 보통 응답이 빠르지만, 혹시 응답이 지연되더라도
+    // 무한정 기다리게 두지 않는다. 응답이 오면 success 필드로 확실하게
+    // 판단하고, 시간 내에 응답이 없을 때만 "확인 중"이라고 정직하게
+    // 안내한다 — 응답 지연을 성공으로 잘못 판단하면 문의가 그냥
+    // 사라져도 알 방법이 없기 때문이다.
     const timedOut = Symbol("timed-out");
     const timeout = new Promise((resolve) => {
       setTimeout(() => resolve(timedOut), 6000);
@@ -225,7 +226,12 @@ function setupContactForm() {
           "접수가 늦어지고 있어요. 곧 연락드리겠지만, 급하시면 전화로 문의해 주세요: 010-2198-5949",
           "is-error"
         );
-      } else if (result.ok) {
+        return;
+      }
+
+      const data = await result.json().catch(() => null);
+
+      if (result.ok && data && data.success) {
         form.reset();
         setStatus(
           "문의가 접수되었습니다. 확인하는 대로 연락드릴게요.",
