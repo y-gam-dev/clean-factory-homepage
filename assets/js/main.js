@@ -199,7 +199,11 @@ function setupContactForm() {
     if (submitBtn) submitBtn.disabled = true;
     setStatus("접수하는 중입니다...", null);
 
+    // multipart/form-data로 보내면 "지역"·"기종" 같은 한글 필드 이름과
+    // 값이 Web3Forms 쪽에서 깨져서 도착하는 문제가 있었다. JSON으로
+    // 보내면 이 문제가 없어, FormData를 순수 객체로 변환해 보낸다.
     const formData = new FormData(form);
+    const payload = Object.fromEntries(formData.entries());
 
     // Web3Forms는 보통 응답이 빠르지만, 혹시 응답이 지연되더라도
     // 무한정 기다리게 두지 않는다. 응답이 오면 success 필드로 확실하게
@@ -215,8 +219,11 @@ function setupContactForm() {
       const result = await Promise.race([
         fetch(ajaxAction, {
           method: "POST",
-          headers: { Accept: "application/json" },
-          body: formData,
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
         }),
         timeout,
       ]);
