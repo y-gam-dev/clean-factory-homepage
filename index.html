@@ -631,11 +631,14 @@
           class="contact-form"
           id="contactForm"
           data-contact-form
+          action="https://formsubmit.co/yygam@naver.com"
+          data-ajax-action="https://formsubmit.co/ajax/yygam@naver.com"
+          method="POST"
         >
-          <!-- TODO: web3forms.com 에서 이메일로 발급받은 실제 접근키로 교체 -->
-          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
-          <input type="hidden" name="subject" value="클린팩토리 홈페이지 문의" />
-          <input type="checkbox" name="botcheck" class="contact-honeypot" tabindex="-1" autocomplete="off" />
+          <input type="hidden" name="_subject" value="클린팩토리 홈페이지 문의" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="text" name="_honey" class="contact-honeypot" tabindex="-1" autocomplete="off" />
 
           <div class="contact-field">
             <label for="contactPhone">연락처 <span class="contact-required">*</span></label>
