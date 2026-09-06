@@ -92,7 +92,7 @@
   /* ---- 레이아웃 ---- */
   --container-max: 1440px;
   --header-height: 64px;
-  --sticky-bar-height: 64px;
+  --sticky-bar-height: 92px; /* 캡슐 버튼 높이(56px) + 위아래 여백 */
 
   /* ---- 그림자 : 유일한 예외, 표면 위 제품/기기 사진 ---- */
   --shadow-photo: 0 3px 30px rgba(0, 0, 0, 0.22);
@@ -184,6 +184,9 @@ button {
 
 .site-logo {
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
   font-size: var(--fs-tagline);
   font-weight: var(--fw-semibold);
   letter-spacing: var(--ls-tagline);
@@ -191,25 +194,69 @@ button {
   white-space: nowrap;
 }
 
-/* 섹션 바로가기 — 이모지 아이콘. 전화 버튼은 하단 고정 바 하나로
-   통일했으므로 헤더에는 넣지 않는다(중복 CTA 정리). */
-.site-nav {
+.site-logo-mark {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+/* 햄버거 버튼 — 3줄 아이콘을 직접 그린다 */
+.nav-toggle {
+  position: relative;
+  width: 44px;
+  height: 44px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: var(--space-4);
+  justify-content: center;
+  gap: 5px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 20px;
+  height: 2px;
+  border-radius: 1px;
+  background-color: var(--color-ink);
+  transition: transform var(--duration-standard) var(--ease-standard),
+    opacity var(--duration-standard) var(--ease-standard);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* 섹션 바로가기 드롭다운 — 그림자 대신 헤어라인 테두리로 뜬 느낌을 낸다 */
+.site-nav {
+  position: absolute;
+  top: calc(var(--header-height) + var(--space-8));
+  right: var(--space-24);
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  padding: var(--space-8);
+  background-color: var(--color-canvas);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-card);
 }
 
 .site-nav-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-pill);
-  font-size: 18px;
-  line-height: 1;
-  transition: transform var(--duration-standard) var(--ease-standard),
-    background-color var(--duration-standard) var(--ease-standard);
+  padding: 12px var(--space-16);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-medium);
+  color: var(--color-ink);
 }
 
 .site-nav-link:hover,
@@ -217,8 +264,8 @@ button {
   background-color: var(--color-canvas-soft);
 }
 
-.site-nav-link:active {
-  transform: scale(0.9);
+.site-nav[hidden] {
+  display: none;
 }
 
 /* ==========================================================================
@@ -922,6 +969,14 @@ button {
   }
 }
 
+/* "더보기" 버튼 — 데스크톱은 마르퀴가 알아서 흘러가므로 필요 없다.
+   모바일(640px 이하)에서만 나타난다. */
+.reviews-more {
+  display: none;
+  width: fit-content;
+  margin: var(--space-24) auto 0;
+}
+
 .review-card {
   padding: var(--space-24);
   border: 1px solid var(--color-hairline);
@@ -1095,7 +1150,8 @@ button {
 
 /* ==========================================================================
    하단 고정 문의 바 — Apple floating-sticky-bar 변형.
-   왼쪽 전화, 오른쪽 문의 폼으로 스크롤. 터치 영역 44px 이상 확보.
+   화면 끝까지 닿지 않는 캡슐 두 개가 떠 있는 형태. 그림자는 사진에만
+   허용되므로 색 채움(파랑)과 테두리만으로 입체감을 낸다.
    ========================================================================== */
 .sticky-bar {
   position: fixed;
@@ -1104,12 +1160,15 @@ button {
   bottom: 0;
   z-index: 90;
   display: flex;
-  height: var(--sticky-bar-height);
-  padding-bottom: env(safe-area-inset-bottom, 0);
-  background-color: rgba(255, 255, 255, 0.92);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  border-top: 1px solid var(--color-hairline-soft);
+  justify-content: center;
+  padding: 0 var(--space-16) calc(var(--space-16) + env(safe-area-inset-bottom, 0));
+}
+
+.sticky-bar-inner {
+  display: flex;
+  gap: var(--space-12);
+  width: 100%;
+  max-width: 420px;
 }
 
 .sticky-bar-btn {
@@ -1118,10 +1177,10 @@ button {
   align-items: center;
   justify-content: center;
   gap: var(--space-8);
-  min-height: 44px;
+  min-height: 56px;
+  border-radius: var(--radius-pill);
   font-size: var(--fs-body);
   font-weight: var(--fw-semibold);
-  color: var(--color-ink);
   transition: transform var(--duration-standard) var(--ease-standard);
 }
 
@@ -1137,6 +1196,7 @@ button {
 .sticky-bar-inquiry {
   color: var(--color-primary);
   background-color: var(--color-canvas);
+  border: 1.5px solid var(--color-primary);
 }
 
 .sticky-bar-icon {
@@ -1146,7 +1206,7 @@ button {
 /* 전화 상담이 하단 바 하나로 유일한 통화 CTA가 됐으므로,
    전화기 아이콘을 문의하기보다 한 단계 크게 키워 눈에 먼저 띄게 한다 */
 .sticky-bar-call .sticky-bar-icon {
-  font-size: 26px;
+  font-size: 24px;
 }
 
 /* ==========================================================================
@@ -1192,25 +1252,18 @@ button {
   }
 
   .site-logo {
-    font-size: 14px;
+    font-size: 15px;
+  }
+
+  .site-logo-mark {
+    width: 28px;
+    height: 28px;
   }
 
   .site-nav {
-    gap: 0;
-    max-width: 45vw;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .site-nav::-webkit-scrollbar {
-    display: none;
-  }
-
-  .site-nav-link {
-    flex-shrink: 0;
-    width: 30px;
-    height: 30px;
-    font-size: 15px;
+    right: var(--space-16);
+    left: var(--space-16);
+    min-width: 0;
   }
 
   .hero-inner {
@@ -1283,30 +1336,18 @@ button {
     font-size: 28px;
   }
 
-  /* 모바일에서는 세로 무한 스크롤 대신 가로로 넘기는 방식으로 바꾼다.
-     3개 열이 각각 한 "페이지"가 되어 좌우로 스와이프되고, 애니메이션과
-     무한 루프용 복제 카드는 꺼서 길이가 불필요하게 늘어나거나
-     빈 공간이 생기지 않게 한다. */
+  /* 모바일에서는 무한 스크롤·가로 스와이프 둘 다 쓰지 않는다.
+     대표 후기 몇 개만 세로로 나열해 보여주고, "더보기"를 눌러야
+     나머지가 펼쳐지는 단순한 방식으로 바꾼다. */
   .reviews-marquee {
-    flex-direction: row;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
-    padding-bottom: 0;
-  }
-
-  .reviews-marquee::-webkit-scrollbar {
-    display: none;
+    flex-direction: column;
+    overflow: visible;
   }
 
   .reviews-column {
-    flex: 0 0 82%;
     height: auto;
     -webkit-mask-image: none;
     mask-image: none;
-    scroll-snap-align: start;
   }
 
   .reviews-track.is-animated {
@@ -1315,6 +1356,15 @@ button {
 
   .reviews-track [aria-hidden="true"] {
     display: none;
+  }
+
+  /* 접힌 상태: 각 열당 대표 후기 2개(총 6개)만 보여준다 */
+  .reviews-marquee.is-collapsed .reviews-track > .review-card:nth-of-type(n + 3) {
+    display: none;
+  }
+
+  .reviews-more {
+    display: flex;
   }
 
   .contact {

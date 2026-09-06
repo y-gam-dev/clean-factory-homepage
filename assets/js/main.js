@@ -5,6 +5,48 @@
    ========================================================================== */
 
 /**
+ * 헤더 햄버거 메뉴. 누르면 섹션 목록 드롭다운이 열리고,
+ * 항목을 클릭하거나 바깥을 클릭하거나 Esc를 누르면 닫힌다.
+ */
+function setupSiteNav() {
+  const toggle = document.getElementById("navToggle");
+  const panel = document.getElementById("siteNavPanel");
+  if (!toggle || !panel) return;
+
+  function close() {
+    panel.hidden = true;
+    toggle.setAttribute("aria-expanded", "false");
+  }
+
+  function open() {
+    panel.hidden = false;
+    toggle.setAttribute("aria-expanded", "true");
+  }
+
+  toggle.addEventListener("click", () => {
+    if (panel.hidden) {
+      open();
+    } else {
+      close();
+    }
+  });
+
+  panel.querySelectorAll(".site-nav-link").forEach((link) => {
+    link.addEventListener("click", close);
+  });
+
+  document.addEventListener("click", (e) => {
+    if (panel.hidden) return;
+    if (panel.contains(e.target) || toggle.contains(e.target)) return;
+    close();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !panel.hidden) close();
+  });
+}
+
+/**
  * 전후 비교 슬라이더.
  * 마우스 드래그, 터치 드래그, 트랙 클릭, 키보드(←/→/Home/End)를 모두 지원한다.
  * Pointer Events로 마우스·터치·펜을 하나의 핸들러로 처리한다.
@@ -104,6 +146,22 @@ function setupReviewsMarquee() {
 }
 
 /**
+ * 후기 "더보기". 모바일(CSS 640px 이하)에서만 실제로 뭔가를 가리는
+ * .is-collapsed 클래스를 눌렀을 때 벗겨낸다. 데스크톱에서는
+ * 이 클래스가 있어도 CSS가 무시하므로 버튼 자체가 안 보인다.
+ */
+function setupReviewsMoreToggle() {
+  const marquee = document.querySelector(".reviews-marquee");
+  const button = document.querySelector("[data-reviews-more]");
+  if (!marquee || !button) return;
+
+  button.addEventListener("click", () => {
+    marquee.classList.remove("is-collapsed");
+    button.hidden = true;
+  });
+}
+
+/**
  * 문의 폼. Web3Forms로 JSON fetch 제출해 페이지 이동 없이
  * 접수 결과를 바로 보여준다. 백엔드·DB 없이 이메일로만 접수된다.
  * botcheck 체크박스가 채워져 있으면 스팸으로 보고 조용히 무시한다.
@@ -177,8 +235,10 @@ function setupContactForm() {
 }
 
 function init() {
+  setupSiteNav();
   setupCompareSliders();
   setupReviewsMarquee();
+  setupReviewsMoreToggle();
   setupContactForm();
 }
 

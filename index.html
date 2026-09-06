@@ -11,7 +11,11 @@
 
   <!-- TODO: 정식 도메인이 정해지면 canonical, Open Graph, Twitter 카드 태그 추가 -->
   <!-- TODO: 상호·주소·영업시간이 확정되면 LocalBusiness JSON-LD 추가 (전화번호는 확정: 010-2198-5949) -->
-  <!-- TODO: 로고 확정 후 favicon.ico / favicon-16x16 / favicon-32x32 / apple-touch-icon 추가 -->
+
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+  <link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
   <link
     rel="stylesheet"
@@ -22,14 +26,31 @@
 <body>
   <header class="site-header">
     <div class="container">
-      <span class="site-logo">에어컨청소 클린팩토리</span>
-      <nav class="site-nav" aria-label="섹션 바로가기">
-        <a href="#symptoms" class="site-nav-link" title="이런 증상이라면" aria-label="이런 증상이라면">🔍</a>
-        <a href="#process" class="site-nav-link" title="시공 과정" aria-label="시공 과정">🛠️</a>
-        <a href="#gallery" class="site-nav-link" title="시공 갤러리" aria-label="시공 갤러리">🖼️</a>
-        <a href="#pricing" class="site-nav-link" title="가격 안내" aria-label="가격 안내">💰</a>
-        <a href="#reviews" class="site-nav-link" title="고객 후기" aria-label="고객 후기">⭐</a>
-        <a href="#contact" class="site-nav-link" title="문의하기" aria-label="문의하기">✉️</a>
+      <a href="#hero" class="site-logo">
+        <img src="assets/images/logo.png" alt="" width="36" height="36" class="site-logo-mark" />
+        클린팩토리
+      </a>
+
+      <button
+        type="button"
+        class="nav-toggle"
+        id="navToggle"
+        aria-expanded="false"
+        aria-controls="siteNavPanel"
+        aria-label="메뉴 열기"
+      >
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" id="siteNavPanel" aria-label="섹션 바로가기" hidden>
+        <a href="#symptoms" class="site-nav-link">이런 증상이라면</a>
+        <a href="#process" class="site-nav-link">시공 과정</a>
+        <a href="#gallery" class="site-nav-link">시공 갤러리</a>
+        <a href="#pricing" class="site-nav-link">가격 안내</a>
+        <a href="#reviews" class="site-nav-link">고객 후기</a>
+        <a href="#contact" class="site-nav-link">문의하기</a>
       </nav>
     </div>
   </header>
@@ -446,7 +467,7 @@
         </div>
       </div>
 
-      <div class="reviews-marquee" data-marquee>
+      <div class="reviews-marquee is-collapsed" data-marquee>
         <div class="reviews-column reviews-column-up">
           <ul class="reviews-track">
             <li class="review-card">
@@ -594,6 +615,10 @@
           </ul>
         </div>
       </div>
+
+      <button type="button" class="btn btn-secondary reviews-more" data-reviews-more>
+        후기 더보기
+      </button>
     </section>
 
     <section class="contact" id="contact">
@@ -662,14 +687,16 @@
   </main>
 
   <div class="sticky-bar">
-    <a href="tel:010-2198-5949" class="sticky-bar-btn sticky-bar-call">
-      <span class="sticky-bar-icon" aria-hidden="true">📞</span>
-      전화 상담
-    </a>
-    <a href="#contact" class="sticky-bar-btn sticky-bar-inquiry">
-      <span class="sticky-bar-icon" aria-hidden="true">✉️</span>
-      문의하기
-    </a>
+    <div class="sticky-bar-inner">
+      <a href="tel:010-2198-5949" class="sticky-bar-btn sticky-bar-call">
+        <span class="sticky-bar-icon" aria-hidden="true">📞</span>
+        전화 상담
+      </a>
+      <a href="#contact" class="sticky-bar-btn sticky-bar-inquiry">
+        <span class="sticky-bar-icon" aria-hidden="true">✉️</span>
+        문의하기
+      </a>
+    </div>
   </div>
 
   <script src="assets/js/main.js"></script>
