@@ -1,0 +1,1280 @@
+/* ==========================================================================
+   클린팩토리 — 디자인 토큰 (:root)
+   출처: DESIGN-apple.md(골격) + DESIGN-airbnb.md(부품), CLAUDE.md 규칙으로 병합
+   - 강조색은 파랑 하나만 사용한다 (Rausch 금지)
+   - 본문은 16px/400/1.5 (Airbnb 기준 채택, Apple 17px 대신)
+   - 모서리 문법: 풀블리드 타일 0 / 카드 14px / 버튼·칩 pill
+   ========================================================================== */
+
+:root {
+  /* ---- 색상 : 강조 (파랑 하나) ---- */
+  --color-primary: #0066cc;        /* 기본 액션 블루 */
+  --color-primary-focus: #0071e3;  /* 포커스 링 */
+  --color-primary-on-dark: #2997ff;/* 어두운 타일 위 링크/강조 */
+  --color-on-primary: #ffffff;
+
+  /* ---- 색상 : 텍스트 ---- */
+  --color-ink: #1d1d1f;            /* 기본 헤드라인·본문 (밝은 배경) */
+  --color-body: #1d1d1f;
+  --color-body-on-dark: #ffffff;
+  --color-body-muted-on-dark: #cccccc;
+  --color-ink-muted-80: #333333;
+  --color-ink-muted-48: #7a7a7a;
+
+  /* ---- 색상 : 표면 (밝은 타일) ---- */
+  --color-canvas: #ffffff;
+  --color-canvas-soft: #f5f5f7;    /* 밝은 타일이 연속될 때 끼우는 연회색 */
+  --color-surface-pearl: #fafafc;
+
+  /* ---- 색상 : 표면 (어두운 타일) ---- */
+  --color-surface-dark-1: #272729;
+  --color-surface-dark-2: #2a2a2c;
+  --color-surface-dark-3: #252527;
+  --color-surface-black: #000000;
+
+  /* ---- 색상 : 경계선 ---- */
+  --color-hairline: #e0e0e0;
+  --color-hairline-soft: #f0f0f0;
+
+  /* ---- 색상 : 상태 (강조색과는 별개 — 폼 검증 등 의미 전달용) ---- */
+  --color-error: #ff6b6b;
+
+  /* ---- 폰트 ---- */
+  --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui,
+    Roboto, "Helvetica Neue", "Malgun Gothic", sans-serif;
+
+  /* 무게 사다리 (CLAUDE.md 지정: 300/400/500/600/700) */
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* 타이포 스케일 — 데스크톱 기준값. 히어로 제목 등은 반응형 구간에서 재정의 */
+  --fs-hero: 56px;        /* 히어로 h1, 600, -0.28px */
+  --fs-display-lg: 40px;  /* 타일 헤드라인, 600 */
+  --fs-display-md: 34px;  /* 섹션 헤드, 600 */
+  --fs-lead: 28px;        /* 서브카피, 400 */
+  --fs-lead-airy: 24px;   /* 여백감 있는 리드, 300 */
+  --fs-tagline: 21px;     /* 서브 타일 태그라인, 600 */
+  --fs-body-strong: 16px; /* 강조 본문, 600 */
+  --fs-body: 16px;        /* 기본 본문, 400, 행간 1.5 — 한글 가독성 기준 */
+  --fs-caption: 14px;
+  --fs-button-large: 18px;
+  --fs-button-utility: 14px;
+  --fs-fine-print: 12px;
+
+  --lh-tight: 1.07;   /* 히어로 제목 */
+  --lh-snug: 1.19;     /* 태그라인 */
+  --lh-body: 1.5;      /* 본문 — 1.5 아래로 좁히지 않는다 */
+  --lh-relaxed: 1.47;
+
+  --ls-hero: -0.28px;
+  --ls-display-md: -0.374px;
+  --ls-tagline: 0.231px;
+
+  /* ---- 모서리 ---- */
+  --radius-none: 0px;      /* 풀블리드 섹션 타일 */
+  --radius-card: 14px;     /* 섹션 안 개별 카드 (Airbnb 방식) */
+  --radius-sm: 8px;        /* 인라인 유틸리티 요소 */
+  --radius-pill: 9999px;   /* 버튼·검색·칩 — 완전한 알약형 */
+
+  /* ---- 간격 (8px 베이스) ---- */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;   /* 섹션 상하 여백 — 모바일 */
+  --space-80: 80px;   /* 섹션 상하 여백 — 데스크톱 */
+
+  /* ---- 레이아웃 ---- */
+  --container-max: 1440px;
+  --header-height: 64px;
+  --sticky-bar-height: 64px;
+
+  /* ---- 그림자 : 유일한 예외, 표면 위 제품/기기 사진 ---- */
+  --shadow-photo: 0 3px 30px rgba(0, 0, 0, 0.22);
+
+  /* ---- 트랜지션 ---- */
+  --ease-standard: ease;
+  --duration-standard: 0.2s;
+}
+
+/* Pretendard 웹폰트는 index.html <head>에서 <link>로 로드한다
+   (CSS @import는 병렬 로딩을 막아 첫 페인트가 늦어지므로 사용하지 않는다) */
+
+/* ==========================================================================
+   리셋 / 베이스
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+  color: var(--color-ink);
+  background-color: var(--color-canvas);
+  /* 하단 고정 문의 바에 마지막 섹션이 가리지 않도록 */
+  padding-bottom: var(--sticky-bar-height);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-24);
+}
+
+/* ==========================================================================
+   헤더 — 최소 골격 (Apple global-nav 변형, 44px 그리드에 여유를 둔 64px)
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.86);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--color-hairline-soft);
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.site-logo {
+  font-size: var(--fs-tagline);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-tagline);
+  color: var(--color-ink);
+}
+
+.site-header .btn {
+  padding: 8px 18px;
+  font-size: var(--fs-button-utility);
+}
+
+/* ==========================================================================
+   버튼 — 강조색은 파랑 하나, 눌림은 scale(0.95)
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  min-height: 44px;
+  padding: 11px 24px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-medium);
+  line-height: 1.2;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform var(--duration-standard) var(--ease-standard);
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.btn-secondary {
+  background-color: var(--color-canvas);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* ==========================================================================
+   히어로 — 시공 현장 영상을 섹션 전체 배경으로 깔고 그 위에 카피를 얹는다
+   (Apple의 어두운 풀블리드 타일 + 사진 위 텍스트 패턴을 영상으로 확장)
+   구조: 영상 배경(전체) → 가독성용 어두운 음영 → 카피 + CTA
+   ========================================================================== */
+.hero {
+  position: relative;
+  isolation: isolate; /* 자식의 z-index가 다른 섹션을 침범하지 않도록 새 스태킹 컨텍스트 */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100svh; /* 모바일 주소창 높이 튐 방지 (지원 브라우저에서 vh를 덮어씀) */
+  background-color: var(--color-surface-dark-1); /* 영상 로드 전/실패 시 대체 */
+}
+
+.hero-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  /* 3분할 병렬 영상이 완전히 정적으로 보이지 않도록 아주 느린 숨쉬기 확대·축소 */
+  animation: heroVideoBreathe 24s ease-in-out infinite alternate;
+  transform-origin: center;
+}
+
+@keyframes heroVideoBreathe {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg-video {
+    animation: none;
+  }
+}
+
+/* 영상이 강렬해서 흰 글자가 묻힐 수 있는 구간을 위한 가독성용 음영.
+   브랜드 무드용 장식 그라디언트가 아니라 대비 확보가 유일한 목적이라 검정 단색 계열만 쓴다 */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.68) 0%,
+    rgba(0, 0, 0, 0.42) 46%,
+    rgba(0, 0, 0, 0.36) 100%
+  );
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: calc(var(--header-height) + var(--space-48)) var(--space-24) var(--space-80);
+  text-align: center;
+}
+
+.hero-eyebrow {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  color: var(--color-primary-on-dark); /* 어두운 배경 위에서는 밝은 블루 변형을 쓴다 */
+  letter-spacing: 0.02em;
+  margin-bottom: var(--space-16);
+}
+
+.hero-title {
+  font-size: var(--fs-hero);
+  /* 무게 사다리(300/400/500/600/700) 안에서 가장 굵은 700을 써서
+     강렬한 인상을 낸다 — 폰트를 바꾸지 않고 굵기와 어두운 배경으로 해결 */
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-hero);
+  color: var(--color-body-on-dark);
+}
+
+.hero-desc {
+  margin-top: var(--space-24);
+  font-size: var(--fs-lead-airy);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+  color: var(--color-body-muted-on-dark);
+}
+
+.hero-cta {
+  margin-top: var(--space-32);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-16);
+  flex-wrap: wrap;
+}
+
+.hero-cta .btn {
+  padding: 14px 28px;
+  font-size: var(--fs-button-large);
+  font-weight: var(--fw-medium);
+}
+
+/* ==========================================================================
+   이런 증상이라면 — 밝은 연회색 타일. 흰 카드가 배경 위에서 구분되도록
+   (그림자는 사진에만 허용되므로 카드는 헤어라인 테두리로만 구분한다)
+   ========================================================================== */
+.symptoms {
+  padding: var(--space-80) 0;
+  background-color: var(--color-canvas-soft);
+}
+
+.symptoms-head {
+  max-width: 640px;
+  margin: 0 auto var(--space-48);
+  text-align: center;
+}
+
+.symptoms-title {
+  font-size: var(--fs-display-md);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-display-md);
+  color: var(--color-ink);
+}
+
+.symptoms-lead {
+  margin-top: var(--space-16);
+  font-size: var(--fs-lead-airy);
+  font-weight: var(--fw-regular);
+  color: var(--color-ink-muted-80);
+}
+
+.symptoms-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-24);
+}
+
+.symptom-card {
+  background-color: var(--color-canvas);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-card);
+  padding: var(--space-24);
+}
+
+.symptom-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  background-color: rgba(0, 102, 204, 0.1);
+  color: var(--color-primary);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--space-16);
+}
+
+.symptom-title {
+  font-size: var(--fs-body-strong);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-relaxed);
+  color: var(--color-ink);
+}
+
+.symptom-desc {
+  margin-top: var(--space-8);
+  font-size: var(--fs-body);
+  color: var(--color-ink-muted-80);
+  line-height: var(--lh-body);
+}
+
+/* ==========================================================================
+   시공 과정 — 어두운 타일 (증상 섹션의 밝은 타일 다음, 교대 리듬)
+   사진에는 표면 위에 놓인 이미지에 허용된 유일한 그림자를 적용한다
+   ========================================================================== */
+.process {
+  padding: var(--space-80) 0;
+  background-color: var(--color-surface-dark-1);
+}
+
+.process-head {
+  max-width: 640px;
+  margin: 0 auto var(--space-80);
+  text-align: center;
+}
+
+.process-title {
+  font-size: var(--fs-display-md);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-display-md);
+  color: var(--color-body-on-dark);
+}
+
+.process-lead {
+  margin-top: var(--space-16);
+  font-size: var(--fs-lead-airy);
+  font-weight: var(--fw-regular);
+  color: var(--color-body-muted-on-dark);
+}
+
+.process-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-80);
+}
+
+.process-step {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-48);
+  align-items: center;
+}
+
+.process-step:nth-child(even) .process-media {
+  order: 2;
+}
+
+.process-step:nth-child(even) .process-text {
+  order: 1;
+}
+
+.process-media {
+  margin: 0;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  box-shadow: var(--shadow-photo); /* 표면 위 사진에 허용된 유일한 그림자 */
+}
+
+.process-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.process-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  background-color: rgba(41, 151, 255, 0.16);
+  color: var(--color-primary-on-dark);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-bold);
+  margin-bottom: var(--space-16);
+}
+
+.process-step-title {
+  font-size: var(--fs-tagline);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+  color: var(--color-body-on-dark);
+}
+
+.process-step-desc {
+  margin-top: var(--space-12);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--color-body-muted-on-dark);
+}
+
+/* ==========================================================================
+   시공 갤러리 — 밝은 타일. 이 사이트에서 전환에 가장 크게 기여하는
+   전후 비교 슬라이더가 들어가는 섹션이라 완성도를 우선한다.
+   ========================================================================== */
+.gallery {
+  padding: var(--space-80) 0;
+  background-color: var(--color-canvas);
+}
+
+.gallery-head {
+  max-width: 640px;
+  margin: 0 auto var(--space-48);
+  text-align: center;
+}
+
+.gallery-title {
+  font-size: var(--fs-display-md);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-display-md);
+  color: var(--color-ink);
+}
+
+.gallery-lead {
+  margin-top: var(--space-16);
+  font-size: var(--fs-lead-airy);
+  font-weight: var(--fw-regular);
+  color: var(--color-ink-muted-80);
+}
+
+/* 대표 사례가 6건이라 3열 × 2줄로 꽉 채운다 (4열은 6장일 때 4+2로 남는 줄이
+   생겨 균형이 깨짐). flex-wrap을 써서 사례가 늘어나도 마지막 줄은
+   자동으로 가운데 정렬된다. */
+.gallery-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-24);
+}
+
+.gallery-card {
+  display: flex;
+  flex-direction: column;
+  flex: 0 1 calc(33.333% - 16px); /* 3열: 간격 2개(24px×2)를 뺀 1/3 */
+}
+
+.gallery-caption {
+  margin-top: var(--space-12);
+}
+
+.gallery-caption-title {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+}
+
+.gallery-caption-desc {
+  margin-top: 2px;
+  font-size: var(--fs-caption);
+  color: var(--color-ink-muted-48);
+}
+
+/* ---- 전후 비교 슬라이더 ---- */
+.compare {
+  position: relative;
+}
+
+.compare-media {
+  --reveal: 50%;
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  background-color: var(--color-canvas-soft);
+  box-shadow: var(--shadow-photo); /* 표면 위 사진에 허용된 유일한 그림자 */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.compare-before,
+.compare-after {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.compare-after {
+  clip-path: inset(0 calc(100% - var(--reveal)) 0 0);
+}
+
+.compare-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--reveal);
+  transform: translateX(-50%);
+  width: 44px; /* 터치 대상 최소 44px */
+  padding: 0;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+.compare-handle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background-color: var(--color-canvas);
+  transform: translateX(-50%);
+}
+
+.compare-handle-grip {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.compare-handle-arrow {
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+
+.compare-handle-arrow-left {
+  border-right: 6px solid var(--color-on-primary);
+}
+
+.compare-handle-arrow-right {
+  border-left: 6px solid var(--color-on-primary);
+}
+
+.compare-handle:active .compare-handle-grip {
+  transform: scale(0.95);
+}
+
+.compare-tag {
+  position: absolute;
+  bottom: var(--space-12);
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  background-color: rgba(29, 29, 31, 0.72);
+  color: var(--color-body-on-dark);
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+}
+
+.compare-tag-before {
+  left: var(--space-12);
+}
+
+.compare-tag-after {
+  right: var(--space-12);
+  background-color: var(--color-primary);
+}
+
+/* ==========================================================================
+   가격 안내 — 어두운 타일 (갤러리의 밝은 타일 다음, 교대 리듬)
+   가격은 숨기지 않는다: 실제 대표 가격을 그대로 보여준다
+   ========================================================================== */
+.pricing {
+  padding: var(--space-80) 0;
+  background-color: var(--color-surface-dark-1);
+}
+
+.pricing-head {
+  max-width: 640px;
+  margin: 0 auto var(--space-48);
+  text-align: center;
+}
+
+.pricing-title {
+  font-size: var(--fs-display-md);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-display-md);
+  color: var(--color-body-on-dark);
+}
+
+.pricing-lead {
+  margin-top: var(--space-16);
+  font-size: var(--fs-lead-airy);
+  font-weight: var(--fw-regular);
+  color: var(--color-body-muted-on-dark);
+}
+
+/* 가격표 — 항목이 7개라 카드 그리드로는 어떤 열 수를 골라도 마지막 줄이
+   남는다. 표는 개수와 무관하게 항상 균형 있게 정렬되고, 숫자가 오른쪽
+   줄로 맞춰져 있어 가격끼리 바로 비교하기도 더 쉽다. */
+.pricing-table-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pricing-table thead th {
+  padding: 0 var(--space-8) var(--space-12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+  text-align: center;
+  font-size: var(--fs-fine-print);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.04em;
+  color: var(--color-body-muted-on-dark);
+}
+
+/* 그룹 제목 행 — 가격 행과 헷갈리지 않도록 색·크기·배경을 모두 다르게 준다 */
+.pricing-table-group-row th {
+  padding: var(--space-8) var(--space-8);
+  text-align: center;
+  font-size: 11px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary-on-dark);
+  background-color: rgba(41, 151, 255, 0.1);
+}
+
+.pricing-table-group-row:not(:first-child) th {
+  border-top: var(--space-16) solid var(--color-surface-dark-1);
+}
+
+.pricing-table tbody tr:not(.pricing-table-group-row) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.pricing-table td {
+  padding: var(--space-12) var(--space-8);
+  font-size: var(--fs-body);
+  color: var(--color-body-on-dark);
+  vertical-align: baseline;
+  text-align: center;
+}
+
+.pricing-table-value {
+  font-weight: var(--fw-bold);
+  color: var(--color-primary-on-dark);
+  white-space: nowrap;
+}
+
+.pricing-table-note {
+  font-size: var(--fs-fine-print);
+  color: var(--color-body-muted-on-dark);
+}
+
+/* 안내 문구 — 흐리게 묻히지 않도록 카드와 구분되는 박스로 강조 */
+.pricing-notes {
+  max-width: 640px;
+  margin: var(--space-48) auto 0;
+  padding: var(--space-16) var(--space-24);
+  border-left: 3px solid var(--color-primary-on-dark);
+  background-color: var(--color-surface-dark-2);
+  border-radius: var(--radius-sm);
+}
+
+.pricing-note {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-body);
+  color: var(--color-body-muted-on-dark);
+}
+
+.pricing-note + .pricing-note {
+  margin-top: var(--space-8);
+}
+
+.pricing-note strong {
+  color: var(--color-body-on-dark);
+  font-weight: var(--fw-semibold);
+}
+
+.pricing-cta {
+  margin-top: var(--space-32);
+  text-align: center;
+}
+
+/* ==========================================================================
+   고객 후기 — 밝은 타일 (가격의 어두운 타일 다음, 교대 리듬)
+   실제 네이버 예약 후기를 그대로 옮긴다. 지어낸 후기는 절대 쓰지 않는다.
+   ========================================================================== */
+.reviews {
+  padding: var(--space-80) 0;
+  background-color: var(--color-canvas);
+}
+
+.reviews-head {
+  max-width: 640px;
+  margin: 0 auto var(--space-48);
+  text-align: center;
+}
+
+.reviews-title {
+  font-size: var(--fs-display-md);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-display-md);
+  color: var(--color-ink);
+}
+
+.reviews-lead {
+  margin-top: var(--space-16);
+  font-size: var(--fs-lead-airy);
+  font-weight: var(--fw-regular);
+  color: var(--color-ink-muted-80);
+}
+
+/* 후기 월(wall) — 카드를 세로로 계속 흘려보내 후기가 훨씬 많다는 인상을
+   준다. 3열이 서로 다른 방향·속도로 움직여 기계적으로 보이지 않게 한다.
+   실시간처럼 보이는 가짜 활동(예: "방금 예약") 대신, 실제 후기 자체를
+   풍성하게 보여주는 쪽을 택했다. */
+.reviews-marquee {
+  display: flex;
+  gap: var(--space-24);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-24);
+}
+
+.reviews-column {
+  flex: 1;
+  height: 640px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
+}
+
+.reviews-track {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.reviews-column:nth-child(1) .reviews-track {
+  --marquee-duration: 34s;
+}
+
+.reviews-column:nth-child(2) .reviews-track {
+  --marquee-duration: 44s;
+}
+
+.reviews-column:nth-child(3) .reviews-track {
+  --marquee-duration: 38s;
+}
+
+.reviews-track.is-animated {
+  animation: reviewsScroll var(--marquee-duration, 38s) linear infinite;
+}
+
+.reviews-column-down .reviews-track.is-animated {
+  animation-direction: reverse;
+}
+
+@keyframes reviewsScroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+.reviews-column:hover .reviews-track,
+.reviews-track:focus-within {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reviews-track.is-animated {
+    animation: none;
+  }
+}
+
+.review-card {
+  padding: var(--space-24);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-card);
+  background-color: var(--color-canvas);
+}
+
+.review-card-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.review-avatar {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+  background-color: rgba(0, 102, 204, 0.1);
+  color: var(--color-primary);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+}
+
+.review-name {
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+}
+
+.review-meta {
+  margin-top: 2px;
+  font-size: var(--fs-fine-print);
+  color: var(--color-ink-muted-48);
+}
+
+.review-rating {
+  margin-top: var(--space-16);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+}
+
+.review-star {
+  color: var(--color-primary);
+  margin-right: 2px;
+}
+
+.review-text {
+  margin-top: var(--space-12);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--color-ink-muted-80);
+}
+
+/* ==========================================================================
+   문의하기 — 어두운 타일 (후기의 밝은 타일 다음, 교대 리듬)
+   입력창 자체는 어두운 배경 위에서도 읽히도록 밝게 둔다
+   ========================================================================== */
+.contact {
+  padding: var(--space-80) 0;
+  background-color: var(--color-surface-dark-1);
+}
+
+.contact-head {
+  max-width: 640px;
+  margin: 0 auto var(--space-48);
+  text-align: center;
+}
+
+.contact-title {
+  font-size: var(--fs-display-md);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-display-md);
+  color: var(--color-body-on-dark);
+}
+
+.contact-lead {
+  margin-top: var(--space-16);
+  font-size: var(--fs-lead-airy);
+  font-weight: var(--fw-regular);
+  color: var(--color-body-muted-on-dark);
+}
+
+.contact-form {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.contact-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-16);
+}
+
+.contact-field {
+  margin-bottom: var(--space-16);
+}
+
+.contact-field label {
+  display: block;
+  margin-bottom: var(--space-8);
+  font-size: var(--fs-caption);
+  font-weight: var(--fw-medium);
+  color: var(--color-body-muted-on-dark);
+}
+
+.contact-required {
+  color: var(--color-primary-on-dark);
+}
+
+.contact-field input,
+.contact-field select,
+.contact-field textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 12px 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: inherit;
+  font-size: var(--fs-body);
+}
+
+.contact-field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.contact-field input:focus,
+.contact-field select:focus,
+.contact-field textarea:focus {
+  outline: none;
+  border-color: var(--color-primary-focus);
+}
+
+.contact-honeypot {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.contact-submit {
+  width: 100%;
+  margin-top: var(--space-8);
+}
+
+.contact-status {
+  margin-top: var(--space-16);
+  text-align: center;
+  font-size: var(--fs-caption);
+  color: var(--color-body-muted-on-dark);
+}
+
+.contact-status.is-success {
+  color: var(--color-primary-on-dark);
+  font-weight: var(--fw-semibold);
+}
+
+.contact-status.is-error {
+  color: var(--color-error);
+  font-weight: var(--fw-semibold);
+}
+
+/* ==========================================================================
+   하단 고정 문의 바 — Apple floating-sticky-bar 변형.
+   왼쪽 전화, 오른쪽 문의 폼으로 스크롤. 터치 영역 44px 이상 확보.
+   ========================================================================== */
+.sticky-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  display: flex;
+  height: var(--sticky-bar-height);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-top: 1px solid var(--color-hairline-soft);
+}
+
+.sticky-bar-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-8);
+  min-height: 44px;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  color: var(--color-ink);
+  transition: transform var(--duration-standard) var(--ease-standard);
+}
+
+.sticky-bar-btn:active {
+  transform: scale(0.95);
+}
+
+.sticky-bar-call {
+  color: var(--color-on-primary);
+  background-color: var(--color-primary);
+}
+
+.sticky-bar-inquiry {
+  color: var(--color-primary);
+  background-color: var(--color-canvas);
+}
+
+.sticky-bar-icon {
+  font-size: 18px;
+}
+
+/* ==========================================================================
+   반응형 — 1440 / 1068 / 833 / 640 / 480
+   ========================================================================== */
+@media (max-width: 1068px) {
+  .hero-title {
+    font-size: var(--fs-display-lg); /* 40px */
+  }
+}
+
+@media (max-width: 833px) {
+  .hero-desc {
+    font-size: var(--fs-body);
+  }
+
+  .symptoms-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .process-step {
+    grid-template-columns: 1fr;
+    gap: var(--space-24);
+  }
+
+  .process-step:nth-child(even) .process-media,
+  .process-step:nth-child(even) .process-text {
+    order: initial;
+  }
+
+  .gallery-card {
+    flex-basis: calc(50% - 12px); /* 2열: 간격 1개(24px)를 뺀 1/2 */
+  }
+
+  .reviews-column {
+    height: 560px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-inner {
+    padding: calc(var(--header-height) + var(--space-24)) var(--space-24) var(--space-48);
+  }
+
+  .hero-title {
+    font-size: var(--fs-display-md); /* 34px */
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-cta .btn {
+    width: 100%;
+  }
+
+  .symptoms {
+    padding: var(--space-48) 0;
+  }
+
+  .symptoms-title {
+    font-size: 28px;
+  }
+
+  .symptoms-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .process {
+    padding: var(--space-48) 0;
+  }
+
+  .process-title {
+    font-size: 28px;
+  }
+
+  .process-list {
+    gap: var(--space-48);
+  }
+
+  .gallery {
+    padding: var(--space-48) 0;
+  }
+
+  .gallery-title {
+    font-size: 28px;
+  }
+
+  .gallery-card {
+    flex-basis: 100%;
+  }
+
+  .pricing {
+    padding: var(--space-48) 0;
+  }
+
+  .pricing-title {
+    font-size: 28px;
+  }
+
+  .pricing-table td,
+  .pricing-table thead th {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .pricing-table-note {
+    font-size: 11px;
+  }
+
+  .reviews {
+    padding: var(--space-48) 0;
+  }
+
+  .reviews-title {
+    font-size: 28px;
+  }
+
+  .reviews-marquee {
+    flex-direction: column;
+  }
+
+  .reviews-column {
+    height: 380px;
+  }
+
+  .contact {
+    padding: var(--space-48) 0;
+  }
+
+  .contact-title {
+    font-size: 28px;
+  }
+
+  .contact-row {
+    grid-template-columns: 1fr;
+  }
+
+  .sticky-bar-btn {
+    font-size: var(--fs-caption);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 28px;
+  }
+}

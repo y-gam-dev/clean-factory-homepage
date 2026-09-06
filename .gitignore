@@ -1,0 +1,15 @@
+# 원본 촬영 소스 — 용량이 크고 배포에 쓰이지 않는다.
+# 실제 사이트에서 쓰는 최종 편집본은 assets/images/gallery, assets/images/process,
+# assets/videos/hero 안에 따로 있고, 그것들은 그대로 커밋된다.
+assets/videos/*.mp4
+assets/images/*.mp4
+assets/images/아파트 1웨이4대/
+assets/images/동대문아동센터/
+assets/images/2in1/
+
+# 민감 정보 — 공개 저장소에 올리지 않는다
+assets/images/사업자등록증*
+
+# OS / 에디터
+.DS_Store
+Thumbs.db
