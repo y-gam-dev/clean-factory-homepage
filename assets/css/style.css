@@ -676,8 +676,15 @@ button {
   pointer-events: none;
 }
 
-.compare-after {
+/* 손잡이(핸들) 위치(--reveal)를 기준으로 각 사진이 자기 영역만 보여주도록
+   독립적으로 클립한다. 겹침이나 쌓임 순서에 기대지 않으므로 항상
+   왼쪽 = 청소 전, 오른쪽 = 청소 후로 고정된다. */
+.compare-before {
   clip-path: inset(0 calc(100% - var(--reveal)) 0 0);
+}
+
+.compare-after {
+  clip-path: inset(0 0 0 var(--reveal));
 }
 
 .compare-handle {
