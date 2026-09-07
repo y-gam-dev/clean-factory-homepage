@@ -90,11 +90,10 @@ function setupCompareSliders() {
     handle.addEventListener("pointerup", stopDragging);
     handle.addEventListener("pointercancel", stopDragging);
 
-    // 손잡이 바깥, 사진 영역 아무 곳이나 눌러도 그 위치로 즉시 이동
-    media.addEventListener("pointerdown", (e) => {
-      if (e.target === handle || handle.contains(e.target)) return;
-      apply(percentFromClientX(e.clientX));
-    });
+    // 사진 영역 전체가 아니라 손잡이(44px 폭)에서만 드래그를 받는다.
+    // 예전에는 사진 아무 곳이나 눌러도 그 위치로 손잡이가 이동했는데,
+    // 모바일에서는 스크롤하려고 사진을 터치한 것도 슬라이더 조작으로
+    // 잡혀버려 아래로 스크롤하기 어려웠다.
 
     // 키보드 접근성: 방향키로 5%씩, Home/End로 양 끝까지
     handle.addEventListener("keydown", (e) => {
@@ -146,18 +145,48 @@ function setupReviewsMarquee() {
 }
 
 /**
- * 후기 "더보기". 모바일(CSS 640px 이하)에서만 실제로 뭔가를 가리는
- * .is-collapsed 클래스를 눌렀을 때 벗겨낸다. 데스크톱에서는
- * 이 클래스가 있어도 CSS가 무시하므로 버튼 자체가 안 보인다.
+ * 후기 "더보기". 모바일(CSS 640px 이하)에서만 보이는 버튼이다.
+ * 처음엔 열(column)마다 대표 후기 2개(.is-collapsed, CSS 처리)만 보이고,
+ * 누를 때마다 열마다 하나씩 더 펼쳐진다. 전부 다 펼쳐진 뒤 한 번 더
+ * 누르면 처음 상태로 돌아가— 계속 눌러가며 순환한다.
  */
 function setupReviewsMoreToggle() {
   const marquee = document.querySelector(".reviews-marquee");
   const button = document.querySelector("[data-reviews-more]");
   if (!marquee || !button) return;
 
-  button.addEventListener("click", () => {
+  const INITIAL_VISIBLE = 2; // .is-collapsed 기본값과 맞춘다
+  const STEP = 1; // 클릭 한 번에 열마다 한 개씩 더 보여준다
+
+  // 마르퀴 애니메이션용으로 복제된(aria-hidden) 카드는 세지 않는다
+  const columns = Array.from(marquee.querySelectorAll(".reviews-track")).map(
+    (track) =>
+      Array.from(track.children).filter(
+        (card) => !card.hasAttribute("aria-hidden")
+      )
+  );
+  const maxVisible = columns.reduce(
+    (max, cards) => Math.max(max, cards.length),
+    INITIAL_VISIBLE
+  );
+
+  let visible = INITIAL_VISIBLE;
+
+  function render() {
     marquee.classList.remove("is-collapsed");
-    button.hidden = true;
+    columns.forEach((cards) => {
+      cards.forEach((card, i) => {
+        card.hidden = i >= visible;
+      });
+    });
+  }
+
+  button.addEventListener("click", () => {
+    visible =
+      visible >= maxVisible
+        ? INITIAL_VISIBLE
+        : Math.min(visible + STEP, maxVisible);
+    render();
   });
 }
 
