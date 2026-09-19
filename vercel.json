@@ -1,0 +1,19 @@
+{
+  "redirects": [
+    {
+      "source": "/privacy.html",
+      "destination": "https://cleanfactory.kr/privacy/",
+      "permanent": true
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "https://cleanfactory.kr/sitemap.xml",
+      "permanent": true
+    },
+    {
+      "source": "/((?!robots\\.txt$).*)",
+      "destination": "https://cleanfactory.kr/",
+      "permanent": true
+    }
+  ]
+}
